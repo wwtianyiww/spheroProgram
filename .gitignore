@@ -1,0 +1,18 @@
+# CLion
+.idea/
+cmake-build-*/
+
+# Build artifacts
+build/
+out/
+*.exe
+*.obj
+*.o
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+
+# OS
+.DS_Store
+Thumbs.db
