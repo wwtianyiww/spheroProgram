@@ -1,0 +1,8 @@
+//
+// Created by tw123 on 10/28/2025.
+//
+
+#ifndef PROGRAMSPHERO_VISION_HPP
+#define PROGRAMSPHERO_VISION_HPP
+
+#endif //PROGRAMSPHERO_VISION_HPP
