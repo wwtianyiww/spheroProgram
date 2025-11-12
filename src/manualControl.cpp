@@ -10,12 +10,7 @@ ManualControl::ManualControl()
     , rightStickY_(0.0f)
     , leftTrigger_(0.0f)
     , rightTrigger_(0.0f)
-    , buttonA_(false)
-    , buttonB_(false)
-    , buttonX_(false)
-    , buttonY_(false)
-{
-}
+     {}
 
 ManualControl::~ManualControl() {
     if (gamepad_) {
@@ -66,24 +61,6 @@ void ManualControl::update() {
                 running_ = false;
                 break;
 
-            case SDL_EVENT_GAMEPAD_BUTTON_DOWN:
-                switch (event.gbutton.button) {
-                    case SDL_GAMEPAD_BUTTON_SOUTH: buttonA_ = true; break;  // A button
-                    case SDL_GAMEPAD_BUTTON_EAST: buttonB_ = true; break;   // B button
-                    case SDL_GAMEPAD_BUTTON_WEST: buttonX_ = true; break;   // X button
-                    case SDL_GAMEPAD_BUTTON_NORTH: buttonY_ = true; break;  // Y button
-                }
-                break;
-
-            case SDL_EVENT_GAMEPAD_BUTTON_UP:
-                switch (event.gbutton.button) {
-                    case SDL_GAMEPAD_BUTTON_SOUTH: buttonA_ = false; break;
-                    case SDL_GAMEPAD_BUTTON_EAST: buttonB_ = false; break;
-                    case SDL_GAMEPAD_BUTTON_WEST: buttonX_ = false; break;
-                    case SDL_GAMEPAD_BUTTON_NORTH: buttonY_ = false; break;
-                }
-                break;
-
             case SDL_EVENT_GAMEPAD_AXIS_MOTION:
                 // Axis values are -32768 to 32767, normalize to -1.0 to 1.0
                 float value = event.gaxis.value / 32767.0f;
@@ -110,13 +87,11 @@ void ManualControl::printState() {
     std::cout << "Right Stick: X=" << rightStickX_ << " Y=" << rightStickY_ << std::endl;
     std::cout << "Triggers:    L=" << leftTrigger_ << " R=" << rightTrigger_ << std::endl;
     std::cout << "Buttons: ";
-    if (buttonA_) std::cout << "[A] ";
-    if (buttonB_) std::cout << "[B] ";
-    if (buttonX_) std::cout << "[X] ";
-    if (buttonY_) std::cout << "[Y] ";
     std::cout << std::endl;
     std::cout << "Press Ctrl+C to exit" << std::endl;
 }
+
+
 
 void ManualControl::movement() {
     SDL_Event event;
@@ -131,16 +106,16 @@ void ManualControl::movement() {
 
                 switch (event.gaxis.axis) {
                         //turn left right logic
-                    case SDL_GAMEPAD_AXIS_LEFTX: leftStickX_ = value; break;
-                    case SDL_GAMEPAD_AXIS_LEFTY: leftStickY_ = value; break;
+                    case SDL_GAMEPAD_AXIS_LEFTX and SDL_GAMEPAD_AXIS_LEFTY:
+                        leftStickX_ = value;
+
+
+                        break;
+                    //case SDL_GAMEPAD_AXIS_LEFTY: leftStickY_ = value; break;
                         //90 degree rotation left or right logic
                     case SDL_GAMEPAD_AXIS_LEFT_TRIGGER: leftTrigger_ = value; break;
                     case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: rightTrigger_ = value; break;
                 }
-
-
-
-
         }
 
     }

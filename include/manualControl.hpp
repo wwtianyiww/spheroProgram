@@ -24,10 +24,7 @@ private:
     float rightStickY_;
     float leftTrigger_;
     float rightTrigger_;
-    bool buttonA_;
-    bool buttonB_;
-    bool buttonX_;
-    bool buttonY_;
+
 };
 
 

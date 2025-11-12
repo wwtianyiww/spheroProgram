@@ -19,8 +19,8 @@ void Server::writeU32(simple_socket::SimpleConnection &connection, uint32_t leng
 }
 
 std::vector<uint8_t> Server::getFrames(simple_socket::SimpleConnection &connection) {
-    const uint32_t size = readU32(connection); //get size of message
-    std::vector<uint8_t> data(size);
+    const uint32_t size = readU32(connection); //size of message
+    std::vector<uint8_t> data(size); //vector of appropriate size
     if (size) {
         connection.read(data.data(), size); //read data of size
     }
@@ -28,7 +28,7 @@ std::vector<uint8_t> Server::getFrames(simple_socket::SimpleConnection &connecti
 }
 
 void Server::sendFrame(simple_socket::SimpleConnection &connection, const std::vector<uint8_t> &payload) {
-    writeU32(connection, static_cast<uint32_t>(payload.size())); //size -> big endian
+    writeU32(connection, static_cast<uint32_t>(payload.size())); //size in 4bytes (32 bits)
     if (!payload.empty()) {
         connection.write(payload.data(), payload.size()); //send payload of size
     }
@@ -37,12 +37,12 @@ void Server::sendFrame(simple_socket::SimpleConnection &connection, const std::v
 void Server::sendTypedFrame(simple_socket::SimpleConnection &connection, messageProtocol::MessageType type,
     const std::vector<uint8_t> &payload) {
     std::vector<uint8_t> message;
-    message.reserve(1 + payload.size());
+    message.reserve(1 + payload.size()); //adds one byte for "type"
 
     message.push_back(static_cast<uint8_t>(type));
 
     message.insert(message.end(), payload.begin(), payload.end());
-    sendFrame(connection, message);
+    sendFrame(connection, message); //
 }
 
 std::pair<messageProtocol::MessageType, std::vector<uint8_t>> Server::receiveTypedFrame(
