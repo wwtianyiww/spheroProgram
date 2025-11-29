@@ -10,6 +10,7 @@ add_executable(programSphero
         ../include/messageType.hpp
         udpVideoServer.cpp
         ../include/udpVideoServer.hpp
+        ../include/params.hpp
 )
 
 add_custom_command(TARGET programSphero POST_BUILD

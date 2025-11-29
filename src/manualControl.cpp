@@ -1,6 +1,9 @@
 #include "manualControl.hpp"
+#include <params.hpp>
 #include <SDL3/SDL.h>
 #include <vector>
+using namespace parameters;
+
 
 ManualControl::ManualControl()
     : gamepad_(nullptr)
@@ -11,6 +14,8 @@ ManualControl::ManualControl()
     , rightStickY_(0.0f)
     , leftTrigger_(0.0f)
     , rightTrigger_(0.0f)
+    , RPWM(0.0f)
+    , LPWM(0.0f)
      {}
 
 ManualControl::~ManualControl() {
@@ -102,24 +107,33 @@ void ManualControl::movement() {
             case SDL_EVENT_QUIT:
                 running_ = false;
                 break;
-            case SDL_EVENT_GAMEPAD_AXIS_MOTION:
+            case SDL_EVENT_GAMEPAD_AXIS_MOTION: {
                 float value = event.gaxis.value / 32767.0f;
 
                 switch (event.gaxis.axis) {
-                        //turn left right logic
-                    case SDL_GAMEPAD_AXIS_LEFTX < 0:
-                        leftStickX_ = value;
-
-
+                    //turn left right logic
+                    case SDL_GAMEPAD_AXIS_LEFTY: {
+                        leftStickY_ = value;
+                        int pwmCommandLeft = static_cast<int>(round(leftStickY_ * maxPWMValue));
+                        LPWM = pwmCommandLeft;
                         break;
-                    //case SDL_GAMEPAD_AXIS_LEFTY: leftStickY_ = value; break;
-                        //90 degree rotation left or right logic
-                    case SDL_GAMEPAD_AXIS_LEFT_TRIGGER: leftTrigger_ = value; break;
-                    case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER: rightTrigger_ = value; break;
+                    }
+                    case SDL_GAMEPAD_AXIS_RIGHTY: {
+                        rightStickY_ = value;
+                        int pwmCommandRight = static_cast<int>(round(rightStickY_ * maxPWMValue));
+                        RPWM = pwmCommandRight;
+                        break;
+                    }
+                    //90 degree rotation left or right logic
+                    case SDL_GAMEPAD_AXIS_LEFT_TRIGGER:
+                        leftTrigger_ = value;
+                        break;
+                    case SDL_GAMEPAD_AXIS_RIGHT_TRIGGER:
+                        rightTrigger_ = value;
+                        break;
                 }
+                break;
+            }
         }
-
     }
-
-
 }
