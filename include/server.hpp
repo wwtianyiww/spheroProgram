@@ -28,10 +28,10 @@ class Server {
 
     static void sendTypedFrame(simple_socket::SimpleConnection& connection, messageProtocol::MessageType type,  const std::vector<uint8_t>& payload);
 
-    static std::pair<messageProtocol::MessageType, std::vector<uint8_t>>
+    static std::optional<std::pair<messageProtocol::MessageType, std::vector<uint8_t>>>
         receiveTypedFrame(simple_socket::SimpleConnection& connection);
 
-    static void handleClient(std::unique_ptr<simple_socket::SimpleConnection> connection, int id);
+    static void handleClient(const std::unique_ptr<simple_socket::SimpleConnection> &connection);
     simple_socket::TCPServer server(int port);
 
 

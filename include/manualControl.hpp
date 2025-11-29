@@ -24,6 +24,9 @@ private:
     float rightStickY_;
     float leftTrigger_;
     float rightTrigger_;
+    float RPWM;
+    float LPWM;
+
 
 };
 

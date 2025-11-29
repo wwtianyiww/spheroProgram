@@ -1,5 +1,6 @@
 #include "manualControl.hpp"
 #include <SDL3/SDL.h>
+#include <vector>
 
 ManualControl::ManualControl()
     : gamepad_(nullptr)
@@ -106,7 +107,7 @@ void ManualControl::movement() {
 
                 switch (event.gaxis.axis) {
                         //turn left right logic
-                    case SDL_GAMEPAD_AXIS_LEFTX and SDL_GAMEPAD_AXIS_LEFTY:
+                    case SDL_GAMEPAD_AXIS_LEFTX < 0:
                         leftStickX_ = value;
 
 

@@ -8,6 +8,8 @@ add_executable(programSphero
         manualControl.cpp
         ../include/manualControl.hpp
         ../include/messageType.hpp
+        udpVideoServer.cpp
+        ../include/udpVideoServer.hpp
 )
 
 add_custom_command(TARGET programSphero POST_BUILD
